@@ -2,8 +2,7 @@
 ZSyncer - Gelbi123
 ===================
 
-This fork is used for my Zope4 buildout
-with customized code.
+Try to make this Zope4 compatible
 
 For full documentation please see:
 http://packages.python.org/Products.ZSyncer
