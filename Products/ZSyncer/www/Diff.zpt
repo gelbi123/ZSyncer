@@ -1,13 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML lang="en">
-<HEAD>
-<TITLE>Diff</TITLE>
-</HEAD>
-<BODY>
+<span tal:replace="structure context/manage_page_header" />
 <span tal:replace="structure context/manage_tabs" />
+<main class='container-fluid'>
 <p><b>Diff</b> of <span tal:replace="request/object_id" /></p>
 
-<span tal:define="diffresult python:context.manage_diffObject(object_path=request['object_id']);
+<span tal:omit-tag='' tal:define="diffresult python:context.manage_diffObject(object_path=request['object_id']);
                   diff diffresult/diff;
                   local_src diffresult/source;
                   remote_src diffresult/dest;
@@ -49,5 +45,4 @@
         Return to the syncer
      </a> ]
 </p>
-</BODY>
-</HTML>
+</main>
