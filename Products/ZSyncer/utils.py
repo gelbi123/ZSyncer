@@ -12,7 +12,7 @@ from AccessControl import ClassSecurityInfo
 import DateTime
 from DateTime.DateTime import DateTimeError
 from DocumentTemplate.DT_Util import html_quote
-import Globals
+import AccessControl.class_init
 
 # ZSyncer imports.
 import Config
