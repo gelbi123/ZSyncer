@@ -109,7 +109,7 @@ function toggle_checks() {
 <form name="sync_form" method="POST" action="&dtml-absolute_url;">
    <input type="hidden" name="folder" value="&dtml-folder;">
 
-   <table border="0" cellpadding="2" cellspacing="0" width="100%">
+   <table class='table table-striped table-hover table-sm objectItems' border="0" cellpadding="2" cellspacing="0" width="100%">
       <tr class="list-header">
         <td class="list-item">Select</td>
         <td class="list-item">Status</td>
@@ -140,7 +140,8 @@ function toggle_checks() {
 		title=" &dtml-status; " />
         </td>
         <td class="list-item"  align="center">
-            <dtml-if icon><img src="<dtml-var "getPhysicalRoot().absolute_url()">/&dtml-icon;" alt="&dtml-meta_type;"></dtml-if>
+            <dtml-if "'fa' not in sequence_item['icon']"><img src="<dtml-var "getPhysicalRoot().absolute_url()">/&dtml-icon;" alt="&dtml-meta_type;">
+            <dtml-else><i class="&dtml-icon;" alt="&dtml-meta_type;"></dtml-if>
         </td>
 
 	<!-- ID or PATH -->
