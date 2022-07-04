@@ -127,7 +127,7 @@ class _MethodProxy:
         self.url = "%s/call_" % url
         if user:
             self.headers = dict(headers)
-            self.headers["Authorization"] = "Basic %s" % base64.encodestring(
+            self.headers["Authorization"] = "Basic %s" % base64.b64encode(
                 "%s:%s" % (user, password))
         else:
             self.headers = headers
