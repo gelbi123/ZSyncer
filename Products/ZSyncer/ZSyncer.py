@@ -40,7 +40,10 @@ from webdav.interfaces import IWriteLock
 
 # Imports for rpc using ZPublisher.Client.
 from cPickle import loads, dumps
-from ZPublisher import Client
+try:
+    from ZPublisher import Client
+except: 
+    pass
 from ZODB.POSException import ConflictError
 
 
@@ -683,13 +686,20 @@ class ZSyncer(OFS.SimpleItem.Item, Persistent, Acquisition.Implicit,
         d.update(self.getPathInfo(d['path']))
         # This should always be a string right?
         d['meta_type'] = obj.meta_type
-        icon = obj.icon
-        if not isinstance(icon, types.StringType):
-            # CMF fix, where apparently obj.icon may be callable.
-            icon = icon()
-        icon = icon.replace('//', '/')
-        if icon.startswith('/'):
-            icon = icon[1:]
+        # in Zope4 there is no obj.icon because
+        # there is no image source anymore 
+        # So we need obj.zmi_icon to get the 
+        # fontawesome class-name
+        try:
+            icon = obj.icon
+            if not isinstance(icon, types.StringType):
+               # CMF fix, where apparently obj.icon may be callable.
+                icon = icon()
+                icon = icon.replace('//', '/')
+            if icon.startswith('/'):
+                icon = icon[1:]
+        except:                
+            icon = obj.zmi_icon
         d['icon'] = icon
         d['is_folder'] = getattr(obj, 'isPrincipiaFolderish', 0)
         # Try to get DublinCore mod time, if available.
@@ -700,8 +710,10 @@ class ZSyncer(OFS.SimpleItem.Item, Persistent, Acquisition.Implicit,
         else:
             d['dc_modtime'] = ''
         # Formerly known as 'modtime'... this is a DateTime instance.
-        bobotime = obj.bobobase_modification_time()
-        d['last_modified_time'] = bobotime
+        # in Zope4 there is no bobobase_modification_time anymore
+        # so use DateTime(obj._p_mtime) instead
+        modtime = DateTime(obj._p_mtime)
+        d['last_modified_time'] = modtime
         # Size in kB. For backward compatibility, don't depend
         # on this.
         try:
